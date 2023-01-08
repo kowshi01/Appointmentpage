@@ -36,7 +36,7 @@
                 emailid
             }
             //localStorage.setItem(obj.emailid,JSON.stringify(obj));
-            axios.post("https://crudcrud.com/api/4f17804f5b884b29b063b4af675232e8/formData",obj)
+            axios.post("https://crudcrud.com/api/e6c700f24da542328e5a656d9c26a854/formData",obj)
             .then((response)=>{
                 showNewUser(response);
                 console.log(response)})
@@ -45,7 +45,7 @@
             //showNewUser(obj);
         }
         window.addEventListener("DOMContentLoaded",()=>{
-            axios.get("https://crudcrud.com/api/4f17804f5b884b29b063b4af675232e8/formData")
+            axios.get("https://crudcrud.com/api/e6c700f24da542328e5a656d9c26a854/formData")
             .then((response)=>{
                 for(var i=0;i<response.data.length;i++){
                     showNewUser(response.data[i]);
@@ -56,30 +56,31 @@
             })
         function showNewUser(user){
             let parentNode=document.getElementById('output');
-            let childHTML=`<h4 id='heading'> ${user.name} - ${user.emailid} <button onclick=edituser('${user.name},${user.emailid}')>Edit</button>
+            let childHTML=`<h4 id='heading'> ${user.name} - ${user.emailid} 
+            <button onclick=edituser('${user._id},${user.name},${user.emailid}')>Edit</button>
             <button onclick=deluser('${user._id}')>Delete</button></h4>`;
         parentNode.innerHTML=parentNode.innerHTML+childHTML;
         }
         function deluser(id) {
-        removeUser(id)
-        axios.delete(`https://crudcrud.com/api/4f17804f5b884b29b063b4af675232e8/formData/${id}`)
+        axios.delete(`https://crudcrud.com/api/e6c700f24da542328e5a656d9c26a854/formData/${id}`)
         .then((response)=>{
-            console.log(response)})
+            removeUser(id)})
         .catch((err)=>{
                 console.log(err)})
+        
         } 
         function removeUser(id){
-        const parentNodee=document.getElementById('heading');
-        const childNodee=document.getElementById('id');
+        const parentNodee=document.getElementById('output');
+        const childNodee=document.getElementById(id);
         if(childNodee){
         parentNodee.removeChild(childNodee); 
         }
     }
-        function edituser(usern,mailid){
-            usern=document.getElementById('name1').value;
-            mailid=document.getElementById('email').value;
-        deluser(mailid);
-        }  
+    function edituser(id,usern,mailid){
+            document.getElementById('name1').value=usern;
+            document.getElementById('email').value=mailid;
+            deluser(id);
+        } 
         
        
     </script>
